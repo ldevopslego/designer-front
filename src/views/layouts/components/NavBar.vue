@@ -55,9 +55,9 @@
                             <div class="col-lg-2 col-md-4 col-6 tc tl_lg">
                                 <div class=" branding ts__05 lh__1">
                                     <a class="dib" href="home-default.html">
-                                        <img class="w__95 logo_normal dn db_lg" src="assets/images/svg/kalles.svg" alt="Kalles Template">
-                                        <img class="w__100 logo_sticky dn" src="assets/images/svg/kalles.svg" alt="Kalles Template">
-                                        <img class="w__100 logo_mobile dn_lg" src="assets/images/svg/kalles.svg" alt="Kalles Template">
+                                        <img class="w__95 logo_normal dn db_lg" src="@/assets/images/svg/kalles.svg" alt="Kalles Template">
+                                        <img class="w__100 logo_sticky dn" src="@/assets/images/svg/kalles.svg" alt="Kalles Template">
+                                        <img class="w__100 logo_mobile dn_lg" src="@/assets/images/svg/kalles.svg" alt="Kalles Template">
                                     </a>
                                 </div>
                             </div>
@@ -991,18 +991,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+
 </style>
