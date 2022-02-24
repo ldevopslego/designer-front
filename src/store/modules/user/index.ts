@@ -53,6 +53,7 @@ export const useUserStore = defineStore('user', {
       const token = res?.data?.token
       if (token) {
         setToken(token)
+        this.setInfo(res.data)
       }
       return res
     },

@@ -4,7 +4,7 @@ importers:
 
   .:
     specifiers:
-      '@arco-design/web-vue': ^2.17.0
+      '@arco-design/web-vue': ^2.16.1
       '@commitlint/config-conventional': ^16.0.0
       '@types/node': ^17.0.10
       '@types/nprogress': ^0.2.0

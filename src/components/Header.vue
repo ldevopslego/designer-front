@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import SvgIcon from './SvgIcon/index.vue'
+const router = useRouter();
 import { ref } from 'vue'
 import { useDark, useToggle } from '@vueuse/core';
 import { useAppStore, useUserStore } from '@/store';
@@ -87,7 +88,7 @@ const ThemeChange = (val: string | number | boolean) => {
           <path d="M30 24a6 6 0 11-12 0 6 6 0 0112 0z" stroke="#4E5969" stroke-width="2" />
         </svg>
       </li>
-      <li>
+      <li @click="router.push('/info')">
         <svg width="15" height="15" viewBox="0 0 22 22" fill="none">
           <path
             clip-rule="evenodd"
@@ -135,6 +136,7 @@ header {
     display: inline-flex;
 
     li {
+      cursor: pointer;
       margin-left: 10px;
       border-radius: 50%;
       width: 32px;

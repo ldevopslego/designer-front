@@ -85,6 +85,14 @@ const userFormData = reactive({
     imageUrl: "",
 });
 
+const showCaptcha = () => {
+    getCaptcha().then(res => {
+        console.log(res)
+        userFormData.captchaId = res.data.captchaId
+        userFormData.imageUrl = res.data.imageUrl
+    })
+}
+
 const handleSubmit = async ({
     errors,
     values,
@@ -98,6 +106,8 @@ const handleSubmit = async ({
             const res = await userStore.login({ ...values, ...{ captchaId: userFormData.captchaId } });
             if (res && res.code != 200) {
                 Message.error(res.msg);
+                showCaptcha()
+                userFormData.captcha = ''
             } else {
                 Message.success('欢迎使用');
                 router.push('/');
@@ -110,16 +120,10 @@ const handleSubmit = async ({
         }
     }
 };
-const setRememberPassword = () => {
-    //
-};
+
 
 onMounted(() => {
-    getCaptcha().then(res => {
-        console.log(res)
-        userFormData.captchaId = res.data.captchaId
-        userFormData.imageUrl = res.data.imageUrl
-    })
+    showCaptcha()
 })
 </script>
 
