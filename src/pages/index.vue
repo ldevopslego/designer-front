@@ -67,12 +67,13 @@ const data = ref(framework)
 .list {
   display: grid;
   grid-gap: 20px;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  padding: 0 70px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  padding: 0 20px;
   margin-top: 20px;
   .item {
     height: 350px;
     img {
+      width: 100%;
       height: 90%;
     }
     .description {

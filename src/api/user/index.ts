@@ -9,6 +9,7 @@ enum URL {
   login = '/auth/login',
   logout = '/user/logout',
   profile = '/user/profile',
+  register = '/auth/register',
 }
 interface LoginRes {
   token: string
@@ -23,5 +24,6 @@ const getCaptcha = async () => get<IResponse>(URL.captcha)
 const getUserProfile = async () => get<IResponse>(URL.profile)
 const login = async (data: LoginData) => post<IResponse>(URL.login, data)
 const logout = async () => post<LoginRes>(URL.logout)
+const register = async (data: any) => post<IResponse>(URL.register, data)
 
-export { getUserProfile, logout, login, getCaptcha }
+export { getUserProfile, logout, login, getCaptcha, register }

@@ -127,6 +127,7 @@ header {
   .category {
     font-size: 20px;
     width: 40%;
+    list-style: none;
     li {
       cursor: pointer;
     }

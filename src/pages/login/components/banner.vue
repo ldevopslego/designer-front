@@ -1,33 +1,29 @@
 <template>
     <div class="banner">
         <div class="banner-inner">
-            <a-carousel class="carousel" animation-name="fade">
+            <!-- <a-carousel class="carousel" animation-name="fade">
                 <a-carousel-item v-for="item in carouselItem" :key="item.slogan">
                     <div :key="item.slogan" class="carousel-item">
-                        <!-- <div class="carousel-title">{{ item.slogan }}</div>
-                        <div class="carousel-sub-title">{{ item.subSlogan }}</div>-->
+                        <div class="carousel-title">{{ item.slogan }}</div>
+                        <div class="carousel-sub-title">{{ item.subSlogan }}</div>
                         <img class="carousel-image" :src="item.image" />
                     </div>
                 </a-carousel-item>
-            </a-carousel>
+            </a-carousel>-->
         </div>
     </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
-import bannerImage from '@/assets/images/bg.png';
+// import bannerImage from '@/assets/images/bg.png';
 import qunErweima from '@/assets/images/qunerweima.jpg'
 import bannerImage02 from '@/assets/images/banner2.svg'
 
 export default defineComponent({
     setup() {
         const carouselItem = computed(() => [
-            {
-                slogan: 'Vue3+Vite2.X+TypeScript+...',
-                subSlogan: '2022年最新Vue技术栈，最强配置',
-                image: bannerImage,
-            },
+
 
         ]);
         return {

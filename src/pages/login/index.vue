@@ -1,14 +1,11 @@
 <template>
     <div class="container">
-        <!-- <div class="logo">
-        <img :src="logo" width="240" />-->
-
-        <!-- <div class="logo-text">Arco Design Pro</div> -->
-        <!-- </div> -->
         <LoginBanner />
         <div class="content">
             <div class="content-inner">
-                <LoginForm />
+                <transition name="fade">
+                    <LoginForm />
+                </transition>
             </div>
             <!-- <div class="footer">
                 <Footer />
@@ -20,7 +17,7 @@
 <script setup lang="ts">
 import Footer from '@components/footer/index.vue';
 import LoginBanner from './components/banner.vue';
-import LoginForm from './components/login-form.vue';
+import LoginForm from './components/LoginForm/index.vue';
 import logo from '@/assets/icons/svg/logo.svg'
 
 </script>
@@ -31,7 +28,7 @@ import logo from '@/assets/icons/svg/logo.svg'
     height: 100vh;
 
     .banner {
-        width: 65%;
+        width: 50%;
         background: linear-gradient(163.85deg, #1d2129 0%, #00308f 100%);
     }
 
