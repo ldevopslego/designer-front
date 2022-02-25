@@ -2,7 +2,7 @@
   <div class="list-box">
     <a-button type="primary" @click="visible = true">添加作品</a-button>
     <section class="list">
-      <div class="item" v-for="(item, index) in 50" :key="index">
+      <div class="item" v-for="(item, index) in list" :key="index">
         <img src="@/assets/images/photo.png" alt="index" />
       </div>
     </section>
@@ -70,8 +70,12 @@
           </template>
         </a-upload>
       </a-form-item>
-      <a-form-item field="remark" label="备注" :rules="[{ required: true, message: '备注不能为空' }]">
-        <a-input v-model="form.remark" />
+      <a-form-item
+        field="worksDescription"
+        label="备注"
+        :rules="[{ required: true, message: '备注不能为空' }]"
+      >
+        <a-input v-model="form.worksDescription" />
       </a-form-item>
     </a-form>
   </a-modal>
@@ -82,11 +86,11 @@ import { getCategory } from '@/api/category';
 import { IconPlus, IconEdit } from '@arco-design/web-vue/es/icon';
 import { getToken } from '@/utils/auth'
 import { FileItem } from '@arco-design/web-vue/es/upload/interfaces';
-import { addWorks } from '@/api/works';
+import { addWorks, getWorksList } from '@/api/works';
 import { stringify } from 'querystring';
 import { FormInstance } from '@arco-design/web-vue/es/form';
 
-const form = reactive({ worksName: '', catId: '', worksLink: {}, remark: '' })
+const form = reactive({ worksName: '', catId: '', worksLink: {}, worksDescription: '' })
 const modalForm = ref<FormInstance>(null)
 const list = ref([])
 const visible = ref(false)
@@ -97,6 +101,7 @@ const handleSubmit = async (done: (close: boolean) => void) => {
   if (!res) {
     const data = JSON.parse(JSON.stringify(form))
     data.worksLink = form.worksLink.response.data.url
+    data.worksType = 1
     await addWorks(data)
     done(true)
     await getList()
@@ -105,8 +110,14 @@ const handleSubmit = async (done: (close: boolean) => void) => {
   }
 }
 
-const getList = () => {
+const getSelect = () => {
   getCategory().then(res => {
+    select.value = res.data.lists
+  })
+}
+
+const getList = () => {
+  getWorksList().then(res => {
     select.value = res.data.lists
   })
 }
@@ -121,6 +132,7 @@ const onChange = (_, currentFile) => {
 
 
 onMounted(() => {
+  getSelect()
   getList()
 })
 </script>

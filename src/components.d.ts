@@ -8,7 +8,6 @@ declare module 'vue' {
     AForm: typeof import('@arco-design/web-vue')['Form']
     AFormItem: typeof import('@arco-design/web-vue')['FormItem']
     AInput: typeof import('@arco-design/web-vue')['Input']
-    AInputPassword: typeof import('@arco-design/web-vue')['InputPassword']
     AModal: typeof import('@arco-design/web-vue')['Modal']
     AOption: typeof import('@arco-design/web-vue')['Option']
     AProgress: typeof import('@arco-design/web-vue')['Progress']
