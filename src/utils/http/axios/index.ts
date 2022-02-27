@@ -50,9 +50,10 @@ axiosInstance.interceptors.response.use(
 
     if (response.status === 200) {
       return response.data
+    } else {
+      showMessage(response.status)
+      return response
     }
-    showMessage(response.status)
-    return response
   },
   // 请求失败
   (error: any) => {
@@ -94,6 +95,26 @@ export function get<T = any>(url: string, params?: object): Promise<T> {
 export function post<T = any>(url: string, data?: object): Promise<T> {
   return request({ url, method: 'POST', data })
 }
+export function put<T = any>(url: string, data?: object): Promise<T> {
+  return request({ url, method: 'PUT', data })
+}
+
+export function del<T = any>(url: string, data?: object): Promise<T> {
+  return request({ url, method: 'DELETE', data })
+}
+
+export function upload<T = any>(url: string, data?: object): Promise<T> {
+  return request({
+    url,
+    method: 'POST',
+    data,
+    headers: {
+      Accept: '*/*',
+      'Content-Type': 'multipart/form-data', // 文件上传
+    },
+  })
+}
+
 export default request
 export type { AxiosInstance, AxiosResponse }
 /**
