@@ -10,17 +10,22 @@ import { UserState } from './types'
 
 export const useUserStore = defineStore('user', {
   state: (): UserState => ({
-    user_name: undefined,
+    address: undefined,
     avatar: undefined,
-    organization: undefined,
-    location: undefined,
+    bgImage: undefined,
+    city: undefined,
+    country: undefined,
+    createTime: undefined,
+    distinct: undefined,
     email: undefined,
-    blogJuejin: undefined,
-    blogZhihu: undefined,
-    blogGithub: undefined,
-    profileBio: undefined,
-    devLanguages: undefined,
-    role: '',
+    nickname: undefined,
+    phone: undefined,
+    province: undefined,
+    sex: undefined,
+    state: undefined,
+    token: undefined,
+    userId: undefined,
+    username: undefined,
   }),
   getters: {
     userProfile(state: UserState): UserState {
@@ -53,6 +58,8 @@ export const useUserStore = defineStore('user', {
       const token = res?.data?.token
       if (token) {
         setToken(token)
+        localStorage.setItem('userId', res?.data?.userId)
+
         this.setInfo(res.data)
       }
       return res

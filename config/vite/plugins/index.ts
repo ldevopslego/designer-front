@@ -14,6 +14,7 @@ import { ConfigCompressPlugin } from './compress'
 import { ConfigPagesPlugin } from './pages'
 import { ConfigMarkDownPlugin } from './markdown'
 import { ConfigRestartPlugin } from './restart'
+import { configStyleImportPlugin } from './styleImport'
 
 export function createVitePlugins(isBuild: boolean) {
   const vitePlugins: (Plugin | Plugin[])[] = [
@@ -33,6 +34,7 @@ export function createVitePlugins(isBuild: boolean) {
     ConfigMarkDownPlugin(),
     // 监听配置文件改动重启
     ConfigRestartPlugin(),
+    configStyleImportPlugin(),
   ]
 
   // vite-plugin-svg-icons

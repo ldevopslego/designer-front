@@ -1,70 +1,67 @@
 <template>
-    <a-form
-        ref="loginForm"
-        :model="userFormData"
-        class="login-form"
-        layout="vertical"
-        @submit="handleSubmit"
-    >
+    <a-form :model="userFormData" class="login-form" layout="vertical" @finish="onFinish">
         <a-form-item
-            field="username"
+            name="username"
             :rules="[{ required: true, message: '用户名不能为空' }]"
             :validate-trigger="['change', 'blur']"
             hide-label
         >
-            <a-input v-model="userFormData.username" placeholder="saodimangseng">
+            <a-input v-model:value="userFormData.username" placeholder="请输入用户名">
                 <template #prefix>
-                    <icon-user />
+                    <!-- <icon-user /> -->
+                    <user-outlined type="user" />
                 </template>
             </a-input>
         </a-form-item>
         <a-form-item
-            field="password"
+            name="password"
             :rules="[{ required: true, message: '密码不能为空' }]"
             :validate-trigger="['change', 'blur']"
             hide-label
         >
-            <a-input-password v-model="userFormData.password" allow-clear>
+            <a-input-password v-model:value="userFormData.password" allow-clear placeholder="请输入密码">
                 <template #prefix>
-                    <icon-lock />
+                    <lock-outlined />
                 </template>
             </a-input-password>
         </a-form-item>
         <a-form-item
-            field="captcha"
+            name="captcha"
             :rules="[{ required: true, message: '验证码不能为空' }]"
             :validate-trigger="['change', 'blur']"
             hide-label
         >
-            <a-input v-model="userFormData.captcha" allow-clear>
+            <a-input v-model:value="userFormData.captcha" allow-clear placeholder="请输入验证码">
                 <template #prefix>
-                    <icon-lock />
+                    <audit-outlined />
                 </template>
                 <template #suffix>
-                    <img :src="userFormData.imageUrl" class="login-form-captcha" />
+                    <img
+                        :src="userFormData.imageUrl"
+                        class="login-form-captcha"
+                        @click="showCaptcha"
+                    />
                 </template>
             </a-input>
         </a-form-item>
-        <a-space :size="16" direction="vertical">
-            <a-button type="primary" html-type="submit" long :loading="loading">登录</a-button>
+        <a-form-item>
+            <a-button type="primary" html-type="submit" :loading="loading" block>登录</a-button>
             <a-button
                 type="text"
-                long
+                block
                 class="login-form-register-btn"
                 @click="emit('changeMode', false)"
             >注册</a-button>
-        </a-space>
+        </a-form-item>
     </a-form>
 </template>
 
 <script lang="ts" setup>
-import { Message } from '@arco-design/web-vue';
-import { IconLock, IconUser } from '@arco-design/web-vue/es/icon'
-import { ValidatedError } from '@arco-design/web-vue/es/form/interface';
 import { useUserStore } from '@/store/index';
 import useLoading from '@/hooks/loading';
-import { ReqParams } from '@/api/user/types';
 import { getCaptcha } from '@/api/user/index';
+import { UserOutlined, LockOutlined, AuditOutlined } from '@ant-design/icons-vue';
+import { ComponentInternalInstance } from 'vue';
 
 const router = useRouter();
 const errorMessage = ref('');
@@ -73,45 +70,36 @@ const userStore = useUserStore();
 const userFormData = reactive({
     username: 'admin',
     password: 'admin',
-    captcha: '',
+    captcha: "",
     captchaId: "",
     imageUrl: "",
 });
 const emit = defineEmits(["changeMode"])
+const { appContext } = getCurrentInstance() as ComponentInternalInstance
 
 const showCaptcha = () => {
     getCaptcha().then(res => {
-        console.log(res)
         userFormData.captchaId = res.data.captchaId
         userFormData.imageUrl = res.data.imageUrl
     })
 }
 
-const handleSubmit = async ({
-    errors,
-    values,
-}: {
-    errors: Record<string, ValidatedError> | undefined;
-    values: ReqParams;
-}) => {
-    if (!errors) {
-        setLoading(true);
-        try {
-            const res = await userStore.login({ ...values, ...{ captchaId: userFormData.captchaId } });
-            if (res && res.code != 200) {
-                Message.error(res.msg);
-                showCaptcha()
-                userFormData.captcha = ''
-            } else {
-                router.push('/');
-            }
-        } catch (err) {
-            errorMessage.value = (err as Error).message;
-        } finally {
-            setLoading(false);
+const onFinish = async (values: any) => {
+    try {
+        const res = await userStore.login({ ...values, ...{ captchaId: userFormData.captchaId } });
+        if (res && res.code != 200) {
+            appContext.config.globalProperties.$message.error(res.msg);
+            showCaptcha()
+            userFormData.captcha = ''
+        } else {
+            router.push('/');
         }
+    } catch (err) {
+        // proxy.message.error(res.msg);
+    } finally {
+        setLoading(false);
     }
-};
+}
 
 
 onMounted(() => {
@@ -128,7 +116,7 @@ onMounted(() => {
     }
 
     &-captcha {
-        height: 100%;
+        height: 22px;
         width: 100px;
     }
 }

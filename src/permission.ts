@@ -7,12 +7,12 @@ router.beforeEach(async (to: RouteLocationNormalized, _: RouteLocationNormalized
   if (getToken()) {
     if (to.path === '/login') {
       // If is logged in, redirect to the home page
-      next({ path: '/' })
+      next()
     } else {
       next()
     }
   } else {
-    if (['/login'].indexOf(to.path) !== -1) {
+    if (['/login', '/'].indexOf(to.path) !== -1) {
       // In the free login whitelist, go directly
       next()
     } else {

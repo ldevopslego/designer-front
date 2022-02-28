@@ -14,7 +14,7 @@
     >
       <a-input v-model="userFormData.username" placeholder="请输入用户名">
         <template #prefix>
-          <icon-user />
+          <!-- <icon-user /> -->
         </template>
       </a-input>
     </a-form-item>
@@ -26,7 +26,7 @@
     >
       <a-input v-model="userFormData.nickname" placeholder="请输入昵称">
         <template #prefix>
-          <icon-user />
+          <!-- <icon-user /> -->
         </template>
       </a-input>
     </a-form-item>
@@ -38,7 +38,7 @@
     >
       <a-input-password v-model="userFormData.password" allow-clear placeholder="请输入密码">
         <template #prefix>
-          <icon-lock />
+          <!-- <icon-lock /> -->
         </template>
       </a-input-password>
     </a-form-item>
@@ -51,7 +51,7 @@
     >
       <a-input-password v-model="userFormData.confirmPassword" allow-clear placeholder="请输入确认密码">
         <template #prefix>
-          <icon-lock />
+          <!-- <icon-lock /> -->
         </template>
       </a-input-password>
     </a-form-item>
@@ -63,7 +63,7 @@
     >
       <a-input v-model="userFormData.captcha" allow-clear placeholder="请输入验证码">
         <template #prefix>
-          <icon-lock />
+          <!-- <icon-lock /> -->
         </template>
         <template #suffix>
           <img :src="userFormData.imageUrl" class="login-form-captcha" />
@@ -77,9 +77,6 @@
 </template>
 
 <script lang="ts" setup>
-import { Message } from '@arco-design/web-vue';
-import { IconLock, IconUser } from '@arco-design/web-vue/es/icon'
-import { ValidatedError } from '@arco-design/web-vue/es/form/interface';
 import { useUserStore } from '@/store/index';
 import useLoading from '@/hooks/loading';
 import { ReqParams } from '@/api/user/types';

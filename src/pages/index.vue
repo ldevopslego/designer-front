@@ -59,8 +59,6 @@ const data = ref(framework)
       </div>
     </div>
   </div>
-
-  <!-- Readme -->
 </template>
 
 <style lang="less" scoped>
