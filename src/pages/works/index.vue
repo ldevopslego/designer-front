@@ -26,6 +26,7 @@ const mode = ref('works')
 .infobox {
   display: flex;
   min-height: 100vh;
+  background: #f0f2f5;
   .info {
     background: rgb(25, 58, 136);
     width: 400px;
