@@ -5,7 +5,10 @@
 declare module 'vue' {
   export interface GlobalComponents {
     AButton: typeof import('ant-design-vue/es')['Button']
+    ACard: typeof import('ant-design-vue/es')['Card']
     AConfigProvider: typeof import('ant-design-vue/es')['ConfigProvider']
+    ADescriptions: typeof import('ant-design-vue/es')['Descriptions']
+    ADescriptionsItem: typeof import('ant-design-vue/es')['DescriptionsItem']
     AForm: typeof import('ant-design-vue/es')['Form']
     AFormItem: typeof import('ant-design-vue/es')['FormItem']
     AInput: typeof import('ant-design-vue/es')['Input']
@@ -25,4 +28,4 @@ declare module 'vue' {
   }
 }
 
-export {}
+export { }
