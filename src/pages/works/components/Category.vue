@@ -1,0 +1,69 @@
+<template>
+  <a-space>
+    <a-tag
+      v-for="(item, index) in list"
+      :key="index"
+      closable
+      @close.prevent="handleClose(item)"
+    >{{ item.tagName }}</a-tag>
+    <plus-outlined :style="{ fontSize: '16px' }" @click="() => visible = true" />
+  </a-space>
+  <a-modal v-model:visible="visible" title="新建分类" @ok="handleSubmit">
+    <a-form :model="form" ref="formRef">
+      <a-form-item name="name" label="分类名称" :rules="[{ required: true, message: '不能为空' }]">
+        <a-input v-model:value="form.name" />
+      </a-form-item>
+    </a-form>
+  </a-modal>
+</template>
+
+<script setup lang="ts">
+import { getCategory, addCategory, deleteCategory } from '@/api/category';
+import { ExclamationCircleOutlined, PlusOutlined } from '@ant-design/icons-vue';
+import { createVNode } from 'vue';
+import { Modal } from 'ant-design-vue';
+
+const list = ref([])
+const visible = ref(false)
+const form = reactive({ name: '' })
+const formRef = ref(null)
+const handleSubmit = async () => {
+  const res = await formRef.value.validateFields()
+
+  await addCategory({ tagName: form.name })
+  form.name = ''
+  await getList()
+  visible.value = false
+}
+
+const handleClose = (info) => {
+  Modal.confirm({
+    title: '确认删除该分类？',
+    icon: createVNode(ExclamationCircleOutlined),
+    okText: '确认',
+    cancelText: '取消',
+    onOk() {
+      deleteCategory(info.tagId).then(res => {
+        getList()
+      })
+    }
+  });
+
+}
+
+const getList = () => {
+  getCategory().then(res => {
+    list.value = res.data.lists
+  })
+}
+
+onMounted(() => {
+  getList()
+})
+</script>
+
+<style scoped>
+svg {
+  cursor: pointer;
+}
+</style>
