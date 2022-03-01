@@ -33,7 +33,7 @@ export function createVitePlugins(isBuild: boolean) {
     //支持markdown
     ConfigMarkDownPlugin(),
     // 监听配置文件改动重启
-    ConfigRestartPlugin(),
+    // ConfigRestartPlugin(),
     configStyleImportPlugin(),
   ]
 

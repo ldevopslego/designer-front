@@ -1,8 +1,11 @@
-import { get, post } from '@utils/http/axios'
+import { addSign, del, get, post } from '@utils/http/axios'
 import { IResponse } from '@utils/http/axios/type'
 
-const getWorksList = async (data) => get<IResponse>('/api/works', data)
+const getWorksList = async (data) => get<IResponse>('/api/works', addSign(data))
 const addWorks = async (data: any) => post<IResponse>('/api/works', data)
-const getWorksInfo = async (data) => get<IResponse>(`/api/works/${data}`)
+const getWorksInfo = async (data) => get<IResponse>(`/api/works/${data}`, addSign())
+const deleteWork = async (data) => del<IResponse>(`/api/works/${data}`)
 
-export { getWorksList, addWorks, getWorksInfo }
+const recycleDelete = async (data) => del<IResponse>(`/api/works/true/${data}`)
+
+export { getWorksList, addWorks, getWorksInfo, deleteWork, recycleDelete }

@@ -1,11 +1,13 @@
 <template>
   <a-space>
-    <a-tag
+    <a-checkable-tag
       v-for="(item, index) in list"
+      v-model:checked="item.checkable"
       :key="index"
       closable
+      @change="e => handleChange(e, item)"
       @close.prevent="handleClose(item)"
-    >{{ item.tagName }}</a-tag>
+    >{{ item.tagName }}</a-checkable-tag>
     <plus-outlined :style="{ fontSize: '16px' }" @click="() => visible = true" />
   </a-space>
   <a-modal v-model:visible="visible" title="新建分类" @ok="handleSubmit">
@@ -27,6 +29,8 @@ const list = ref([])
 const visible = ref(false)
 const form = reactive({ name: '' })
 const formRef = ref(null)
+
+const emit = defineEmits(['tagChange'])
 const handleSubmit = async () => {
   const res = await formRef.value.validateFields()
 
@@ -48,12 +52,26 @@ const handleClose = (info) => {
       })
     }
   });
+}
 
+const handleChange = (e, item) => {
+
+  list.value = list.value.map((ele, index, array) => {
+    if (ele.tagId === item.tagId) {
+      ele.checkable = e
+    }
+    return ele
+  })
+  emit('tagChange', list.value.filter(item => item.checkable).map(ele => ele.tagId))
 }
 
 const getList = () => {
-  getCategory().then(res => {
-    list.value = res.data.lists
+  getCategory({ tagId: '' }).then(res => {
+    const data = res.data.lists.map(element => {
+      element.checkable = false
+      return element
+    });
+    list.value = data
   })
 }
 

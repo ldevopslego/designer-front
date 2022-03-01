@@ -4,6 +4,7 @@ import { showMessage } from './status'
 import { IResponse, ILogin } from './type'
 import { API_BASE_URL } from '@config/constant'
 import { clearToken, getToken } from '@/utils/auth'
+import md5 from 'md5'
 
 // 如果请求话费了超过 `timeout` 的时间，请求将被中断
 axios.defaults.timeout = 5000
@@ -63,7 +64,7 @@ axiosInstance.interceptors.response.use(
       showMessage(response.status)
       if (response.status === 401) {
         clearToken()
-        location.reload()
+        // location.reload()
       }
       return Promise.reject(response.data)
     }
@@ -113,6 +114,19 @@ export function upload<T = any>(url: string, data?: object): Promise<T> {
       'Content-Type': 'multipart/form-data', // 文件上传
     },
   })
+}
+
+export const addSign = (params) => {
+  const timeStamp = Math.round(new Date().getTime() / 1000).toString()
+  const secretKey = '78435YUI3275BK92@49357&6729GD'
+
+  let md5Params = `${params ? qs.stringify(params) + '&' : ''}timestamp=${timeStamp}`.replace(
+    /\=/g,
+    ':',
+  )
+  console.log(md5Params)
+  const sign = md5(`${md5Params}&${secretKey}`)
+  return qs.parse(`${md5Params.replace(/\:/g, '=')}&sign=${sign}`)
 }
 
 export default request

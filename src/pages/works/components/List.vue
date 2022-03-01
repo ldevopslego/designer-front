@@ -25,8 +25,8 @@ const modalRef = ref<InstanceType<typeof Modal>>()
 
 
 
-const getList = () => {
-  getWorksList({}).then(res => {
+const getList = (param) => {
+  getWorksList({ delete: 0, ...param }).then(res => {
     list.value = res.data.lists
   })
 }
@@ -39,6 +39,8 @@ const openModal = () => {
 onMounted(() => {
   getList()
 })
+
+defineExpose({ getList })
 </script>
 
 
