@@ -1,5 +1,5 @@
 // 权限问题后期增加
-import { get, post, put } from '@utils/http/axios'
+import { addSign, get, post, put } from '@utils/http/axios'
 import { IResponse } from '@utils/http/axios/type'
 import { ReqAuth, ReqParams, ResResult } from './types'
 import { UserState } from '@/store/modules/user/types'
@@ -22,7 +22,7 @@ export interface LoginData {
 }
 
 const getCaptcha = async () => get<IResponse>(URL.captcha)
-const getUserProfile = async (id) => get<IResponse>(`${URL.profile}/${id}`)
+const getUserProfile = async (id) => get<IResponse>(`${URL.profile}/${id}`, addSign())
 const editUserProfile = async (data) => put<IResponse>(`${URL.editProfile}`, data)
 const login = async (data: LoginData) => post<IResponse>(URL.login, data)
 const logout = async () => post<LoginRes>(URL.logout)

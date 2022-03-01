@@ -9,10 +9,11 @@
         @click="router.push(`/works/id?id=${item.worksId}`)"
       >
         <img :src="item.worksLink" alt="index" />
+        <div>{{ item.worksName }}</div>
       </div>
     </section>
   </div>
-  <Modal ref="modalRef"></Modal>
+  <Modal ref="modalRef" @change="getList()"></Modal>
 </template>
 
 <script setup lang="ts" >
@@ -51,10 +52,14 @@ defineExpose({ getList })
     margin-top: 10px;
     .item {
       height: 350px;
-      border: 1px solid #bbb7b7;
+      text-align: center;
       img {
+        border: 1px solid #bbb7b7;
         width: 100%;
         height: 90%;
+      }
+      div {
+        padding: 10px 0;
       }
     }
   }

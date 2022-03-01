@@ -52,7 +52,7 @@ const visible = ref(false)
 const form = ref(defaultInfo)
 const formRef = ref<FormInstance>()
 
-
+const emit = defineEmits(['change'])
 
 const show = async () => {
   const res = await getInfo()
@@ -72,6 +72,7 @@ const getInfo = () => {
 const handleSubmit = async () => {
   const res = await formRef.value?.validateFields()
   await editUserProfile(res)
+  emit('change')
   visible.value = false
 }
 

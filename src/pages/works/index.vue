@@ -23,7 +23,7 @@ const mode = ref('works')
 const listRef = ref()
 
 const tagChange = (value) => {
-  listRef.value.getList({ tagId: value.join(',') })
+  listRef.value.getList({ tagId: value.join('_') })
 }
 
 </script>

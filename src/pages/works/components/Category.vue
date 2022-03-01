@@ -6,8 +6,10 @@
       :key="index"
       closable
       @change="e => handleChange(e, item)"
-      @close.prevent="handleClose(item)"
-    >{{ item.tagName }}</a-checkable-tag>
+    >
+      {{ item.tagName }}
+      <close-outlined @click.prevent.stop="handleClose(item)" />
+    </a-checkable-tag>
     <plus-outlined :style="{ fontSize: '16px' }" @click="() => visible = true" />
   </a-space>
   <a-modal v-model:visible="visible" title="新建分类" @ok="handleSubmit">
@@ -21,7 +23,7 @@
 
 <script setup lang="ts">
 import { getCategory, addCategory, deleteCategory } from '@/api/category';
-import { ExclamationCircleOutlined, PlusOutlined } from '@ant-design/icons-vue';
+import { ExclamationCircleOutlined, PlusOutlined, CloseOutlined } from '@ant-design/icons-vue';
 import { createVNode } from 'vue';
 import { Modal } from 'ant-design-vue';
 

@@ -28,3 +28,5 @@ declare module 'vue' {
     SvgIcon: typeof import('./components/SvgIcon/index.vue')['default']
   }
 }
+
+export { }

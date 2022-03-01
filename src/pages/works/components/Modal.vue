@@ -46,7 +46,7 @@
           placeholder="这是占位文本"
         ></MarkDown>
       </a-form-item>
-      <a-form-item name="remark" label="备注" :rules="[{ required: true, message: '备注不能为空' }]">
+      <a-form-item name="remark" label="备注">
         <a-input v-model:value="form.remark" />
       </a-form-item>
     </a-form>
@@ -97,6 +97,9 @@ const getQueryVariable = (variable: string) => {
 const show = (mode: string) => {
   visible.value = true
   getSelect()
+  nextTick(() => {
+    formRef.value.resetFields();
+  })
   if (mode === 'edit') {
     getWorksInfo(getQueryVariable('id')).then(res => {
       for (let i in res.data) {
@@ -134,18 +137,15 @@ const handleChange = (v: string) => {
 }
 
 const handleSubmit = async () => {
-  try {
-    const value = await formRef.value.validateFields()
-
-    const data = JSON.parse(JSON.stringify(value))
-    data.worksLink = form.worksLink[0].url
-    data.worksType = 1
-    data.isOpen = 1
-    data.tagId = form.tagId.join(',')
-    await addWorks(data)
-    emit("change")
-  } catch {
-  }
+  const value = await formRef.value.validateFields()
+  const data = JSON.parse(JSON.stringify(value))
+  data.worksLink = form.worksLink[0].url
+  data.worksType = 1
+  data.isOpen = 1
+  data.tagId = form.tagId.join(',')
+  await addWorks(data)
+  visible.value = false
+  emit("change")
 }
 
 defineExpose({ show })
