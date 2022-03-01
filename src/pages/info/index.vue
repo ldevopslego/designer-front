@@ -24,7 +24,6 @@
 <script lang="ts" setup>
 import { getUserProfile } from '@/api/user';
 import Modal from './components/Modal.vue';
-
 const defaultInfo = ({
   "userId": '', // 用户ID
   "username": "", // 用户名
@@ -41,18 +40,14 @@ const defaultInfo = ({
 })
 const info = ref(defaultInfo)
 const modalRef = ref<InstanceType<typeof Modal>>()
-
-
 const getInfo = () => {
   getUserProfile(localStorage.getItem('userId')).then(res => {
     info.value = res.data
   })
 }
-
 const openModal = () => {
   modalRef.value?.show()
 }
-
 onMounted(() => {
   getInfo()
 })
@@ -63,7 +58,6 @@ onMounted(() => {
   width: 100%;
   height: 100vh;
   color: white;
-
   background: #f0f2f5;
   .image {
     height: 200px;

@@ -18,12 +18,9 @@
 <script setup lang="ts" >
 import Modal from './Modal.vue'
 import { getWorksList } from '@/api/works';
-
 const router = useRouter();
 const list = ref([])
 const modalRef = ref<InstanceType<typeof Modal>>()
-
-
 
 const getList = (param) => {
   getWorksList({ delete: 0, ...param }).then(res => {
@@ -34,7 +31,6 @@ const getList = (param) => {
 const openModal = () => {
   modalRef.value?.show('add')
 }
-
 
 onMounted(() => {
   getList()
@@ -63,7 +59,6 @@ defineExpose({ getList })
     }
   }
 }
-
 .avatar-uploader > .ant-upload {
   width: 128px;
   height: 128px;
@@ -72,7 +67,6 @@ defineExpose({ getList })
   font-size: 32px;
   color: #999;
 }
-
 .ant-upload-select-picture-card .ant-upload-text {
   margin-top: 8px;
   color: #666;
