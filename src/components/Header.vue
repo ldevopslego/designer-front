@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useDark, useToggle } from '@vueuse/core';
 import { UserOutlined, TabletOutlined } from '@ant-design/icons-vue';
+import logo from '@/assets/icons/svg/enchant_logo.svg'
 
 const router = useRouter();
 const title = ref('I want to study typescript')
@@ -35,7 +36,9 @@ const ThemeChange = (val: string | number | boolean) => {
 
 <template>
   <header>
-    <div class="logo">初笺 CHUJIAN</div>
+    <div class="logo">
+      <img :src="logo" width="240" />
+    </div>
     <ul class="category">
       <li>灵感</li>
       <li>找工作</li>
@@ -59,7 +62,7 @@ const ThemeChange = (val: string | number | boolean) => {
 header {
   display: flex;
   align-items: center;
-  padding: 0 40px;
+  padding: 0 30px;
   justify-content: space-between;
   height: 80px;
   background: #ffffff;
