@@ -21,17 +21,22 @@ import { getWorksList } from '@/api/works';
 const router = useRouter();
 const list = ref([])
 const modalRef = ref<InstanceType<typeof Modal>>()
-const getList = () => {
-  getWorksList({}).then(res => {
+
+const getList = (param) => {
+  getWorksList({ delete: 0, ...param }).then(res => {
     list.value = res.data.lists
   })
 }
+
 const openModal = () => {
   modalRef.value?.show('add')
 }
+
 onMounted(() => {
   getList()
 })
+
+defineExpose({ getList })
 </script>
 
 

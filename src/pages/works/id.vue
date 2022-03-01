@@ -13,15 +13,19 @@
         </a-descriptions-item>
       </a-descriptions>
     </a-card>
-    <a-button type="primary" @click="openModal()">修改信息</a-button>
+    <a-button type="primary" @click="openModal()">修改作品</a-button>
+    <a-button type="primary" @click="handleDelete()">删除作品</a-button>
   </div>
-  <Modal ref="modalRef" @change="getInfo()"></Modal>
+  <WorksModal ref="modalRef" @change="getInfo()"></WorksModal>
 </template>
 
 <script setup lang="ts">
-import { getWorksInfo } from '@/api/works';
-import Modal from './components/Modal.vue'
+import { deleteWork, getWorksInfo } from '@/api/works';
+import WorksModal from './components/Modal.vue'
 import MarkdownViewer from '@/components/Markdown/src/MarkdownViewer.vue';
+import { Modal } from 'ant-design-vue';
+import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
+import { createVNode } from 'vue';
 
 const info = ref({})
 const modalRef = ref<InstanceType<typeof Modal>>()
@@ -44,6 +48,22 @@ const getInfo = () => {
 
 const openModal = () => {
   modalRef.value?.show('edit')
+}
+
+const handleDelete = () => {
+  console.log(info)
+  Modal.confirm({
+    title: '确认删除该作品？',
+    icon: createVNode(ExclamationCircleOutlined),
+    okText: '确认',
+    cancelText: '取消',
+    onOk() {
+      deleteWork(info.value.worksId).then(() => {
+        history.go(-1)
+      })
+    }
+  });
+
 }
 
 

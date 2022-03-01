@@ -11,11 +11,11 @@
         <a-input v-model:value="form.worksName" />
       </a-form-item>
       <a-form-item name="tagId" label="作品分类" :rules="[{ required: true, message: '作品分类不能为空' }]">
-        <a-select v-model:value="form.catId">
+        <a-select v-model:value="form.tagId" mode="multiple">
           <a-select-option
             v-for="(item, index) in select"
             :key="index"
-            :value="item.tagId"
+            :value="`${item.tagId}`"
           >{{ item.tagName }}</a-select-option>
         </a-select>
       </a-form-item>
@@ -75,7 +75,7 @@ const valueRef = ref(`
 
 const emit = defineEmits(['change'])
 
-const form = reactive({ worksName: '', catId: '', worksLink: [], worksDescription: '' })
+const form = reactive({ worksName: '', tagId: [], worksLink: [], worksDescription: '' })
 
 const getSelect = () => {
   getCategory().then(res => {
@@ -141,6 +141,7 @@ const handleSubmit = async () => {
     data.worksLink = form.worksLink[0].url
     data.worksType = 1
     data.isOpen = 1
+    data.tagId = form.tagId.join(',')
     await addWorks(data)
     emit("change")
   } catch {

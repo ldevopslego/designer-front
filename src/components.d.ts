@@ -6,6 +6,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     AButton: typeof import('ant-design-vue/es')['Button']
     ACard: typeof import('ant-design-vue/es')['Card']
+    ACheckableTag: typeof import('ant-design-vue/es')['CheckableTag']
     AConfigProvider: typeof import('ant-design-vue/es')['ConfigProvider']
     ADescriptions: typeof import('ant-design-vue/es')['Descriptions']
     ADescriptionsItem: typeof import('ant-design-vue/es')['DescriptionsItem']
@@ -27,9 +28,3 @@ declare module 'vue' {
     SvgIcon: typeof import('./components/SvgIcon/index.vue')['default']
   }
 }
-
-<<<<<<< HEAD
-export {}
-=======
-export { }
->>>>>>> origin/develop

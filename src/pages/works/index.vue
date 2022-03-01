@@ -3,8 +3,8 @@
   <div class="infobox">
     <div class="content">
       <template v-if="mode == 'works'">
-        <Category />
-        <List />
+        <Category @tag-change="tagChange" />
+        <List ref="listRef" />
       </template>
       <template v-else>
         <Recycle></Recycle>
@@ -20,6 +20,12 @@ import Header from './components/Header.vue'
 import Recycle from './components/Recycle.vue'
 
 const mode = ref('works')
+const listRef = ref()
+
+const tagChange = (value) => {
+  listRef.value.getList({ tagId: value.join(',') })
+}
+
 </script>
 
 <style lang="less" scoped>
