@@ -5,6 +5,9 @@
         <a-descriptions-item label="作品链接" :span="3">
           <img class="workImg" :src="info.worksLink" />
         </a-descriptions-item>
+        <a-descriptions-item label="作品标签" :span="3">
+          <a-tag v-for="item in info.tags">{{ item.tagName }}</a-tag>
+        </a-descriptions-item>
         <a-descriptions-item label="作品名">{{ info.worksName }}</a-descriptions-item>
         <a-descriptions-item label="作品描述">{{ info.remark }}</a-descriptions-item>
         <a-descriptions-item label="创建时间">{{ info.createTime }}</a-descriptions-item>

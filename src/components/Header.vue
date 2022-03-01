@@ -68,6 +68,7 @@ header {
   ul {
     display: inline-flex;
     justify-content: space-between;
+    margin: 0;
   }
 
   .logo {

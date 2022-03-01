@@ -64,7 +64,7 @@ axiosInstance.interceptors.response.use(
       showMessage(response.status)
       if (response.status === 401) {
         clearToken()
-        // location.reload()
+        location.reload()
       }
       return Promise.reject(response.data)
     }

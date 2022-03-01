@@ -17,7 +17,7 @@
       </a-descriptions>
     </a-card>
     <a-button type="primary" @click="openModal()">修改信息</a-button>
-    <Modal ref="modalRef"></Modal>
+    <Modal ref="modalRef" @change="getInfo"></Modal>
   </div>
 </template>
 
