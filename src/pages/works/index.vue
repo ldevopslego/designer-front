@@ -1,7 +1,7 @@
 <template>
   <Header @change-mode="e => mode = e"></Header>
-  <div class="infobox">
-    <div class="content">
+  <div class="infobox" @scroll="handleScroll">
+    <div class="content" id="content" ref="contentRef">
       <template v-if="mode == 'works'">
         <Category @tag-change="tagChange" />
         <List ref="listRef" />
@@ -21,9 +21,21 @@ import Recycle from './components/Recycle.vue'
 
 const mode = ref('works')
 const listRef = ref()
+const contentRef = ref()
+const tagId = ref([])
 
 const tagChange = (value) => {
   listRef.value.getList({ tagId: value.join('_') })
+  tagId.value = value
+}
+
+
+const handleScroll = (e) => {
+  let box = parseInt(window.getComputedStyle(contentRef.value).height)
+  let list = listRef.value.getHeight()
+  if (list - (box + e.target.scrollTop) < 20) {
+    listRef.value.getList({ tagId: tagId.value.join('_') })
+  }
 }
 
 </script>
@@ -31,12 +43,10 @@ const tagChange = (value) => {
 <style lang="less" scoped>
 .infobox {
   display: flex;
-  min-height: 100vh;
+  height: calc(100vh - 55px);
+  overflow: auto;
   background: #f0f2f5;
-  .info {
-    background: rgb(25, 58, 136);
-    width: 400px;
-  }
+
   .content {
     flex: 1 1 auto;
     padding: 20px;
