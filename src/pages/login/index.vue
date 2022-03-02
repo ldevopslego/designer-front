@@ -7,11 +7,9 @@
                     <LoginForm />
                 </transition>
             </div>
-            <!-- <div class="footer">
-                <Footer />
-            </div>-->
         </div>
     </div>
+    <Footer />
 </template>
 
 <script setup lang="ts">
@@ -25,7 +23,7 @@ import logo from '@/assets/icons/svg/logo.svg'
 <style lang="less" scoped>
 .container {
     display: flex;
-    height: 100vh;
+    height: calc(100vh - 40px);
 
     .banner {
         width: 50%;
@@ -39,13 +37,6 @@ import logo from '@/assets/icons/svg/logo.svg'
         align-items: center;
         justify-content: center;
         padding-bottom: 40px;
-    }
-
-    .footer {
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        width: 100%;
     }
 }
 

@@ -10,14 +10,14 @@
     <transition-group name="slide" v-show="isLogin">
       <LoginForm @change-mode="e => isLogin = e" v-if="isLogin"></LoginForm>
 
-      <!-- <RegisterForm @change-mode="e => isLogin = e" v-else></RegisterForm> -->
+      <RegisterForm @change-mode="e => isLogin = e" v-else></RegisterForm>
     </transition-group>
   </div>
 </template>
 
 <script lang="ts" setup>
 import LoginForm from './login-form.vue'
-// import RegisterForm from './register-form.vue';
+import RegisterForm from './register-form.vue';
 
 const isLogin = ref(true)
 

@@ -10,7 +10,7 @@
       <a-form-item name="worksName" label="作品名" :rules="[{ required: true, message: '作品名不能为空' }]">
         <a-input v-model:value="form.worksName" />
       </a-form-item>
-      <a-form-item name="tagId" label="作品分类" :rules="[{ required: true, message: '作品分类不能为空' }]">
+      <a-form-item name="tagId" label="作品分类">
         <a-select v-model:value="form.tagId" mode="multiple">
           <a-select-option
             v-for="(item, index) in select"
