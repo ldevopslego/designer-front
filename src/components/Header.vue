@@ -1,12 +1,48 @@
+<template>
+  <header>
+    <div class="logo">
+      <img :src="logo" width="240" />
+    </div>
+    <ul class="category">
+      <li>灵感</li>
+      <li>找工作</li>
+      <li>学习设计</li>
+      <li>版权保护</li>
+      <li>市场</li>
+      <li>聘请设计师</li>
+    </ul>
+    <ul class="operate">
+      <template v-if="userId">
+        <li @click="router.push('/info')">
+          <user-outlined />
+        </li>
+        <li @click="router.push('/works')">
+          <tablet-outlined />
+        </li>
+        <li @click="handleExit">
+          <import-outlined />
+        </li>
+      </template>
+      <li @click="router.push('/login')" v-else>
+        <select-outlined />
+      </li>
+    </ul>
+  </header>
+</template>
+
 <script setup lang="ts">
-import { useDark, useToggle } from '@vueuse/core';
-import { UserOutlined, TabletOutlined } from '@ant-design/icons-vue';
+import { UserOutlined, TabletOutlined, ImportOutlined, ExclamationCircleOutlined, SelectOutlined } from '@ant-design/icons-vue';
+import logo from '@/assets/icons/svg/enchant_logo.svg'
+import { useUserStore } from '@/store';
+import { createVNode } from 'vue';
+import { Modal } from 'ant-design-vue'
 
 const router = useRouter();
 const title = ref('I want to study typescript')
 // 检测浏览器系统主题
 const darkThemeMq = window.matchMedia('(prefers-color-scheme: dark)')
-
+const userStore = useUserStore();
+const userId = localStorage.getItem('userId')
 
 // const isDark = useDark({
 //   selector: 'body',
@@ -31,35 +67,25 @@ const ThemeChange = (val: string | number | boolean) => {
     document.documentElement.classList.remove('dark')
   }
 }
-</script>
 
-<template>
-  <header>
-    <div class="logo">初笺 CHUJIAN</div>
-    <ul class="category">
-      <li>灵感</li>
-      <li>找工作</li>
-      <li>学习设计</li>
-      <li>版权保护</li>
-      <li>市场</li>
-      <li>聘请设计师</li>
-    </ul>
-    <ul class="operate">
-      <li @click="router.push('/info')">
-        <user-outlined />
-      </li>
-      <li @click="router.push('/works')">
-        <tablet-outlined />
-      </li>
-    </ul>
-  </header>
-</template>
+const handleExit = () => {
+  Modal.confirm({
+    title: '确认退出登录？',
+    icon: createVNode(ExclamationCircleOutlined),
+    okText: '确认',
+    cancelText: '取消',
+    onOk() {
+      userStore.logout()
+    }
+  });
+}
+</script>
 
 <style lang="less">
 header {
   display: flex;
   align-items: center;
-  padding: 0 40px;
+  padding: 0 30px;
   justify-content: space-between;
   height: 80px;
   background: #ffffff;

@@ -8,7 +8,7 @@
         :key="index"
         @click="router.push(`/works/id?id=${item.worksId}`)"
       >
-        <img :src="item.worksLink" alt="index" />
+        <img :src="item.worksLink" />
         <div>{{ item.worksName }}</div>
       </div>
     </section>
@@ -26,6 +26,7 @@ const modalRef = ref<InstanceType<typeof Modal>>()
 const getList = (param) => {
   getWorksList({ delete: 0, ...param }).then(res => {
     list.value = res.data.lists
+
   })
 }
 
@@ -33,11 +34,18 @@ const openModal = () => {
   modalRef.value?.show('add')
 }
 
+const getHeight = () => {
+  return document.getElementsByClassName('list-box')[0].offsetHeight
+
+}
+
 onMounted(() => {
   getList()
 })
 
-defineExpose({ getList })
+
+
+defineExpose({ getList, getHeight })
 </script>
 
 

@@ -1,4 +1,5 @@
 <template>
+  <Header></Header>
   <div class="info">
     <a-card>
       <!-- <div class="image">
@@ -23,6 +24,7 @@
 
 <script lang="ts" setup>
 import { getUserProfile } from '@/api/user';
+import Header from './components/Header.vue';
 import Modal from './components/Modal.vue';
 const defaultInfo = ({
   "userId": '', // 用户ID

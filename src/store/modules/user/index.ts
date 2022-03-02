@@ -66,9 +66,10 @@ export const useUserStore = defineStore('user', {
     },
     // Logout
     async logout() {
-      await userLogout()
       this.resetInfo()
       clearToken()
+      localStorage.removeItem('userId')
+      location.reload()
       // 路由表重置
       // location.reload();
     },

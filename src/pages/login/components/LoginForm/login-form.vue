@@ -64,12 +64,11 @@ import { UserOutlined, LockOutlined, AuditOutlined } from '@ant-design/icons-vue
 import { ComponentInternalInstance } from 'vue';
 
 const router = useRouter();
-const errorMessage = ref('');
 const { loading, setLoading } = useLoading();
 const userStore = useUserStore();
 const userFormData = reactive({
-    username: 'admin',
-    password: 'admin',
+    username: '',
+    password: '',
     captcha: "",
     captchaId: "",
     imageUrl: "",

@@ -1,42 +1,36 @@
 <template>
-  <a-form
-    ref="loginForm"
-    :model="userFormData"
-    class="login-form"
-    layout="vertical"
-    @submit="handleSubmit"
-  >
+  <a-form :model="userFormData" class="register-form" layout="vertical" @finish="onFinish">
     <a-form-item
-      field="username"
+      name="username"
       :rules="[{ required: true, message: '用户名不能为空' }]"
       :validate-trigger="['change', 'blur']"
       hide-label
     >
-      <a-input v-model="userFormData.username" placeholder="请输入用户名">
+      <a-input v-model:value="userFormData.username" placeholder="请输入用户名">
         <template #prefix>
           <!-- <icon-user /> -->
         </template>
       </a-input>
     </a-form-item>
     <a-form-item
-      field="nickname"
+      name="nickname"
       :rules="[{ required: true, message: '昵称不能为空' }]"
       :validate-trigger="['change', 'blur']"
       hide-label
     >
-      <a-input v-model="userFormData.nickname" placeholder="请输入昵称">
+      <a-input v-model:value="userFormData.nickname" placeholder="请输入昵称">
         <template #prefix>
           <!-- <icon-user /> -->
         </template>
       </a-input>
     </a-form-item>
     <a-form-item
-      field="password"
+      name="password"
       :rules="[{ required: true, message: '密码不能为空' }]"
       :validate-trigger="['change', 'blur']"
       hide-label
     >
-      <a-input-password v-model="userFormData.password" allow-clear placeholder="请输入密码">
+      <a-input-password v-model:value="userFormData.password" allow-clear placeholder="请输入密码">
         <template #prefix>
           <!-- <icon-lock /> -->
         </template>
@@ -44,35 +38,37 @@
     </a-form-item>
 
     <a-form-item
-      field="confirmPassword"
+      name="confirmPassword"
       :rules="[{ validator: confirmPassword }]"
       :validate-trigger="['change', 'blur']"
       hide-label
     >
-      <a-input-password v-model="userFormData.confirmPassword" allow-clear placeholder="请输入确认密码">
+      <a-input-password
+        v-model:value="userFormData.confirmPassword"
+        allow-clear
+        placeholder="请输入确认密码"
+      >
         <template #prefix>
           <!-- <icon-lock /> -->
         </template>
       </a-input-password>
     </a-form-item>
     <a-form-item
-      field="captcha"
+      name="captcha"
       :rules="[{ required: true, message: '验证码不能为空' }]"
       :validate-trigger="['change', 'blur']"
       hide-label
     >
-      <a-input v-model="userFormData.captcha" allow-clear placeholder="请输入验证码">
+      <a-input v-model:value="userFormData.captcha" allow-clear placeholder="请输入验证码">
         <template #prefix>
           <!-- <icon-lock /> -->
         </template>
         <template #suffix>
-          <img :src="userFormData.imageUrl" class="login-form-captcha" />
+          <img :src="userFormData.imageUrl" class="register-form-captcha" />
         </template>
       </a-input>
     </a-form-item>
-    <a-space :size="16" direction="vertical">
-      <a-button type="primary" html-type="submit" long :loading="loading">注册</a-button>
-    </a-space>
+    <a-button type="primary" html-type="submit" long :loading="loading" block>注册</a-button>
   </a-form>
 </template>
 
@@ -81,11 +77,10 @@ import { useUserStore } from '@/store/index';
 import useLoading from '@/hooks/loading';
 import { ReqParams } from '@/api/user/types';
 import { getCaptcha, register } from '@/api/user/index';
+import { ComponentInternalInstance } from 'vue';
 
-const router = useRouter();
 const errorMessage = ref('');
 const { loading, setLoading } = useLoading();
-const userStore = useUserStore();
 const userFormData = reactive({
   username: '',
   nickname: '',
@@ -95,6 +90,7 @@ const userFormData = reactive({
   captchaId: "",
   imageUrl: "",
 });
+const { appContext } = getCurrentInstance() as ComponentInternalInstance
 const emit = defineEmits(["changeMode"])
 
 const showCaptcha = () => {
@@ -105,39 +101,31 @@ const showCaptcha = () => {
   })
 }
 
-const handleSubmit = async ({
-  errors,
-  values,
-}: {
-  errors: Record<string, ValidatedError> | undefined;
-  values: ReqParams;
-}) => {
-  if (!errors) {
-    setLoading(true);
-    try {
-      const res = await register({ ...values, ...{ captchaId: userFormData.captchaId } });
-      if (res && res.code != 200) {
-        Message.error(res.msg);
-        showCaptcha()
-        userFormData.captcha = ''
-      } else {
-        emit('changeMode', true)
-      }
-    } catch (err) {
-      errorMessage.value = (err as Error).message;
-    } finally {
-      setLoading(false);
+const onFinish = async (values: any) => {
+  try {
+    const res = await register({ ...values, ...{ captchaId: userFormData.captchaId } });
+    if (res && res.code != 200) {
+      appContext.config.globalProperties.$message.error(res.msg);
+      showCaptcha()
+      userFormData.captcha = ''
+    } else {
+      emit('changeMode', true)
     }
+  } catch (err) {
+    // errorMessage.value = (err as Error).message;
+  } finally {
+    setLoading(false);
   }
-};
+}
 
-const confirmPassword = (value: any, callback: (error: any) => void) => {
+const confirmPassword = (rule: any, value: any, callback: (error?: any) => void) => {
+  console.log(value)
   if (!value) {
     callback('确认密码不能为空')
   } else if (value !== '' && value !== userFormData.password) {
     callback('密码和确认密码不一致')
   } else {
-    callback('')
+    callback()
   }
 }
 
@@ -148,14 +136,14 @@ onMounted(() => {
 
 
 <style lang="less" scoped>
-.login-form {
+.register-form {
   &-password-actions {
     display: flex;
     justify-content: space-between;
   }
 
   &-captcha {
-    height: 100%;
+    height: 22px;
     width: 100px;
   }
 }
