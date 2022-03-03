@@ -34,7 +34,7 @@ const handleScroll = (e) => {
   let box = parseInt(window.getComputedStyle(contentRef.value).height)
   let list = listRef.value.getHeight()
   if (list - (box + e.target.scrollTop) < 20) {
-    listRef.value.getList({ tagId: tagId.value.join('_') })
+    listRef.value.getList({ tagId: tagId.value.join('_') }, 'load')
   }
 }
 

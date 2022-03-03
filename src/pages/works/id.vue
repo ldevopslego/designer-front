@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Header></Header>
     <a-card>
       <a-descriptions title="作品信息">
         <a-descriptions-item label="作品链接" :span="3">
@@ -25,6 +26,7 @@
 <script setup lang="ts">
 import { deleteWork, getWorksInfo } from '@/api/works';
 import WorksModal from './components/Modal.vue'
+import Header from '../info/components/Header.vue'
 import MarkdownViewer from '@/components/Markdown/src/MarkdownViewer.vue';
 import { Modal } from 'ant-design-vue';
 import { ExclamationCircleOutlined } from '@ant-design/icons-vue';

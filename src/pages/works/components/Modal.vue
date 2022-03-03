@@ -58,7 +58,7 @@
 import { getToken } from '@/utils/auth'
 import { getCategory } from '@/api/category';
 import { uploadFile } from '@/api/system/upload';
-import { addWorks, getWorksInfo } from '@/api/works';
+import { addWorks, editWorks, getWorksInfo } from '@/api/works';
 import MarkDown from '@/components/Markdown/src/Markdown.vue';
 import { PlusOutlined } from '@ant-design/icons-vue';
 
@@ -71,6 +71,8 @@ const valueRef = ref(`
 
 # content
 `);
+
+const id = ref()
 
 
 const emit = defineEmits(['change'])
@@ -97,6 +99,7 @@ const getQueryVariable = (variable: string) => {
 const show = (mode: string) => {
   visible.value = true
   getSelect()
+  id.value = ''
   nextTick(() => {
     formRef.value.resetFields();
   })
@@ -114,6 +117,7 @@ const show = (mode: string) => {
               url: res.data.worksLink,
             }]
         }
+        id.value = res.data.worksId
       }
     })
   }
@@ -142,8 +146,13 @@ const handleSubmit = async () => {
   data.worksLink = form.worksLink[0].url
   data.worksType = 1
   data.isOpen = 1
-  data.tagId = form.tagId.join(',')
-  await addWorks(data)
+  data.tagId = form.tagId.join('_')
+  if (id.value) {
+    data.worksId = id.value
+    await editWorks(data)
+  } else {
+    await addWorks(data)
+  }
   visible.value = false
   emit("change")
 }

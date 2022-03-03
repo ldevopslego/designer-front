@@ -13,6 +13,9 @@
       </div>
     </section>
   </div>
+  <div class="loading">
+    <a-spin :spinning="loading" size="large" />
+  </div>
   <Modal ref="modalRef" @change="getList()"></Modal>
 </template>
 
@@ -22,12 +25,30 @@ import { getWorksList } from '@/api/works';
 const router = useRouter();
 const list = ref([])
 const modalRef = ref<InstanceType<typeof Modal>>()
+const loading = ref(false)
+const page = ref(1)
+const total = ref(0)
 
-const getList = (param) => {
-  getWorksList({ delete: 0, ...param }).then(res => {
-    list.value = res.data.lists
-
-  })
+const getList = (param?: any, type?: string) => {
+  if (type) {
+    if (list.value.length < total.value) {
+      loading.value = true
+      page.value = page.value + 1
+      loading.value = true
+      getWorksList({ delete: 0, page: page.value, ...param }).then(res => {
+        list.value = list.value.concat(res.data.lists)
+        total.value = res.data.total
+        loading.value = false
+      })
+    }
+  } else {
+    loading.value = true
+    getWorksList({ delete: 0, page: page.value, ...param }).then(res => {
+      list.value = res.data.lists
+      total.value = res.data.total
+      loading.value = false
+    })
+  }
 }
 
 const openModal = () => {
@@ -71,6 +92,11 @@ defineExpose({ getList, getHeight })
       }
     }
   }
+}
+
+.loading {
+  padding: 20px 0;
+  text-align: center;
 }
 .avatar-uploader > .ant-upload {
   width: 128px;

@@ -19,6 +19,7 @@ declare module 'vue' {
     ASelect: typeof import('ant-design-vue/es')['Select']
     ASelectOption: typeof import('ant-design-vue/es')['SelectOption']
     ASpace: typeof import('ant-design-vue/es')['Space']
+    ASpin: typeof import('ant-design-vue/es')['Spin']
     ATag: typeof import('ant-design-vue/es')['Tag']
     AUpload: typeof import('ant-design-vue/es')['Upload']
     Footer: typeof import('./components/footer/index.vue')['default']
@@ -30,4 +31,4 @@ declare module 'vue' {
   }
 }
 
-export {}
+export { }
